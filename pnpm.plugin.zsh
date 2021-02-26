@@ -11,12 +11,17 @@ alias p='pnpm'
 alias pa='pnpm add'
 alias pad='pnpm add --save-dev'
 alias pap='pnpm add --save-peer'
+alias prm='pnpm remove'
 alias pin='pnpm install'
+alias pun='pnpm uninstall'
 alias pls='pnpm list'
 alias pout='pnpm outdated'
-alias prm='pnpm remove'
+alias pau='pnpm audit'
+alias pwhy='pnpm why'
 alias pui='pnpm update --interactive'
 alias puil='pnpm update --interactive --latest'
+
+# Global packages
 alias pga='pnpm add --global'
 alias pgls='pnpm list --global'
 alias pgrm='pnpm remove --global'
@@ -32,6 +37,8 @@ alias pt='pnpm test'
 alias ptc='pnpm test --coverage'
 alias pln='pnpm run lint'
 
-# Misc
+# Miscs
 alias ph='pnpm help'
 alias pi='pnpm init'
+alias ppub='pnpm publish'
+alias psv='pnpm server'
