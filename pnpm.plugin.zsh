@@ -36,6 +36,7 @@ alias pst='pnpm start'
 alias pt='pnpm test'
 alias ptc='pnpm test --coverage'
 alias pln='pnpm run lint'
+alias pdoc='pnpm run doc'
 
 # Miscs
 alias ph='pnpm help'
