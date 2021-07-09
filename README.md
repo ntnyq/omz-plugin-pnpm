@@ -13,6 +13,7 @@ plugins=(... pnpm)
 | Alias | Command                              | Description                                                                   |
 | ----- | ------------------------------------ | ----------------------------------------------------------------------------- |
 | p     | `pnpm`                               | The Pnpm command                                                              |
+| px    | `pnpx`                               | Pnpm execute. Fetch a package, hotload it and run command                     |
 | pa    | `pnpm add`                           | Install a package in dependencies (`package.json`)                            |
 | pad   | `pnpm add --save-dev`                | Install a package in devDependencies (`package.json`)                         |
 | pap   | `pnpm add --save-peer`               | Install a package in peerDependencies (`package.json`)                        |
