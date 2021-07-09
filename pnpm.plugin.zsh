@@ -43,3 +43,6 @@ alias ph='pnpm help'
 alias pi='pnpm init'
 alias ppub='pnpm publish'
 alias psv='pnpm server'
+
+# pnpx
+alias px='pnpx'
