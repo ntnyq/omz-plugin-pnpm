@@ -1,8 +1,20 @@
 # Pnpm plugin
 
-This plugin adds many useful aliases for common Pnpm commands.
+Aliases for common Pnpm commands.
 
-To use it, add `pnpm` to the plugins array in your zshrc file:
+## Usage
+
+> It's highly recommended to use a ZSH plugin manager like [zinit](https://github.com/zdharma-continuum/zinit)
+
+First, clone this repo to your omz plugins directory:
+
+```sh
+$ gcl https://github.com/ntnyq/omz-plugin-pnpm.git $ZSH/custom/plugins/pnpm
+```
+
+**Note**: Only if you use the default custom directory
+
+Then add `pnpm` to the plugins array in your zshrc file:
 
 ```zsh
 plugins=(... pnpm)
