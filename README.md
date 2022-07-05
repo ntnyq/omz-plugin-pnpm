@@ -2,23 +2,25 @@
 
 Aliases for common [pnpm](https://pnpm.io) commands.
 
-## Usage
+## Installation
 
-> It's highly recommended to use a ZSH plugin manager like [zinit](https://github.com/zdharma-continuum/zinit)
+-   [Oh My Zsh](#oh-my-zsh)
+-   [Zinit](#zinit)
 
-First, clone this repo to your omz plugins directory:
+### Oh My Zsh
 
-```sh
-$ gcl https://github.com/ntnyq/omz-plugin-pnpm.git $ZSH/custom/plugins/pnpm
-```
+1. Clone the repository:
+    ```zsh
+    git clone --depth=1 https://github.com/ntnyq/omz-plugin-pnpm.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/pnpm
+    ```
+2. Include it in your `~/.zshrc`:
+    ```zsh
+    plugins=(... pnpm)
+    ```
 
-**Note**: Only if you use the default custom directory
+### Zinit
 
-Then add `pnpm` to the plugins array in your zshrc file:
-
-```zsh
-plugins=(... pnpm)
-```
+Add `zinit light ntnyq/omz-plugin-pnpm` to`~/.zshrc`
 
 ## Aliases
 
@@ -43,7 +45,7 @@ plugins=(... pnpm)
 | pun   | `pnpm uninstall`                     | Uninstall dependencies defined in `package.json`                              |
 | pln   | `pnpm run lint`                      | Run the lint script defined in `package.json`                                 |
 | pdoc  | `pnpm run doc`                       | Run the doc script defined in `package.json`                                  |
-| pdocs  | `pnpm run docs`                     | Run the docs script defined in `package.json`                                 |
+| pdocs | `pnpm run docs`                      | Run the docs script defined in `package.json`                                 |
 | pls   | `pnpm list`                          | List installed packages                                                       |
 | pout  | `pnpm outdated`                      | Check for outdated package dependencies                                       |
 | prm   | `pnpm remove`                        | Remove installed packages                                                     |
@@ -57,5 +59,5 @@ plugins=(... pnpm)
 | puil  | `pnpm update --interactive --latest` | Prompt for which outdated packages to upgrade to the latest available version |
 | pup   | `pnpm update`                        | Upgrade packages to their latest version                                      |
 | psv   | `pnpm server`                        | Manage a pnpm store server                                                    |
-| pc    | `pnpm create`                        | Create a project from a create-* start kit                                    |
+| pc    | `pnpm create`                        | Create a project from a create-\* start kit                                   |
 | ppub  | `pnpm publish`                       | Publish a package to the registry                                             |
