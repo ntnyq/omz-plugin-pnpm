@@ -27,37 +27,50 @@ Add `zinit light ntnyq/omz-plugin-pnpm` to`~/.zshrc`
 | Alias | Command                              | Description                                                                   |
 | ----- | ------------------------------------ | ----------------------------------------------------------------------------- |
 | p     | `pnpm`                               | The pnpm command                                                              |
-| px    | `pnpx`                               | Pnpm execute. Fetch a package, hotload it and run command                     |
+| pex   | `pnpm exec`                          | Execute a shell command in scope of a project                                 |
+| pdx   | `pnpm dlx`                           | Fetch a package without installing, hotload and run it's command              |
 | pa    | `pnpm add`                           | Install a package in dependencies (`package.json`)                            |
 | pad   | `pnpm add --save-dev`                | Install a package in devDependencies (`package.json`)                         |
+| prm   | `pnpm remove`                        | Remove installed packages                                                     |
+| pls   | `pnpm list`                          | List installed packages                                                       |
 | pap   | `pnpm add --save-peer`               | Install a package in peerDependencies (`package.json`)                        |
-| pb    | `pnpm run build`                     | Run the build script defined in `package.json`                                |
-| pd    | `pnpm run dev`                       | Run the dev script defined in `package.json`                                  |
 | pga   | `pnpm add --global`                  | Install packages globally on your operating system                            |
 | pgls  | `pnpm list --global`                 | List global installed packages                                                |
 | pgrm  | `pnpm remove --global`               | Remove global installed packages from your OS                                 |
 | pgu   | `pnpm update --global`               | Upgrade packages installed globally to their latest version                   |
-| ph    | `pnpm help`                          | Show help for a pnpm command                                                  |
-| pau   | `pnpm audit`                         | Check for known security issues with the installed packages                   |
-| pwhy  | `pnpm why`                           | Show the packages that depend on given package                                |
 | pi    | `pnpm init`                          | Interactively creates or updates a package.json file                          |
 | pin   | `pnpm install`                       | Install dependencies defined in `package.json`                                |
-| pun   | `pnpm uninstall`                     | Uninstall dependencies defined in `package.json`                              |
-| pln   | `pnpm run lint`                      | Run the lint script defined in `package.json`                                 |
-| pdoc  | `pnpm run doc`                       | Run the doc script defined in `package.json`                                  |
-| pdocs | `pnpm run docs`                      | Run the docs script defined in `package.json`                                 |
-| pls   | `pnpm list`                          | List installed packages                                                       |
-| pout  | `pnpm outdated`                      | Check for outdated package dependencies                                       |
-| prm   | `pnpm remove`                        | Remove installed packages                                                     |
 | prun  | `pnpm run`                           | Run a defined package script                                                  |
-| ps    | `pnpm run serve`                     | Start the dev server                                                          |
 | pst   | `pnpm start`                         | Run the start script defined in `package.json`                                |
+| pln   | `pnpm run lint`                      | Run the lint script defined in `package.json`                                 |
+| pdocs | `pnpm run docs`                      | Run the docs script defined in `package.json`                                 |
+| pb    | `pnpm run build`                     | Run the build script defined in `package.json`                                |
+| pd    | `pnpm run dev`                       | Run the dev script defined in `package.json`                                  |
+| psv   | `pnpm run serve`                     | Run the serve script defined in `package.json`                                |
 | pt    | `pnpm test`                          | Run the test script defined in `package.json`                                 |
 | ptc   | `pnpm test --coverage`               | Run the test script defined in `package.json` with coverage                   |
-| pup   | `pnpm upgrade`                       | Update packages to their latest version based on the specified range          |
-| pui   | `pnpm update --interactive`          | Prompt for which outdated packages to upgrade                                 |
+| pu    | `pnpm update`                        | Update packages to their latest version based on the specified range          |
 | puil  | `pnpm update --interactive --latest` | Prompt for which outdated packages to upgrade to the latest available version |
-| pup   | `pnpm update`                        | Upgrade packages to their latest version                                      |
-| psv   | `pnpm server`                        | Manage a pnpm store server                                                    |
 | pc    | `pnpm create`                        | Create a project from a create-\* start kit                                   |
 | ppub  | `pnpm publish`                       | Publish a package to the registry                                             |
+
+## CHANGELOG
+
+### 2022-07-15
+
+- Removed aliases
+  - `pun` for `pnpm uninstall`. Use `prm` instead.
+  - `px` for `pnpx`. It's deprecated. Use `pex` and `pdx` instead.
+  - `pui` for `pnpm update --interactive`. Use `pu` and `puil` instead.
+  - `pdoc` for `pnpm run doc`. Maybe rename your scripts to `docs` and use `pdocs` instead.
+  - `psv` for `pnpm server`.
+  - `ph` for `pnpm help`.
+  - `pout` for `pnpm outdated`.
+  - `pau` for `pnpm audit`.
+  - `pwhy` for `'pnpm why`.
+- Changed aliases
+  - `pup` for `pnpm update` has been renamed to `pu`.
+  - `ps` for `pnpm run serve` has been renamed to `psv`. See [issue #6](https://github.com/ntnyq/omz-plugin-pnpm/issues/6)
+- New aliases
+  - `pex` for `pnpm exec`.
+  - `pdx` for `pnpm dlx`.

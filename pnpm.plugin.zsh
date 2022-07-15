@@ -1,46 +1,37 @@
-# ALIASES
+# Aliases
 
 alias p='pnpm'
 
-# packages
+# Dependencies
 alias pa='pnpm add'
 alias pad='pnpm add --save-dev'
 alias pap='pnpm add --save-peer'
 alias prm='pnpm remove'
 alias pin='pnpm install'
-alias pun='pnpm uninstall'
 alias pls='pnpm list'
-alias pout='pnpm outdated'
-alias pau='pnpm audit'
-alias pwhy='pnpm why'
-alias pup='pnpm update'
-alias pui='pnpm update --interactive'
+alias pu='pnpm update'
 alias puil='pnpm update --interactive --latest'
 
-# global packages
+# Global dependencies
 alias pga='pnpm add --global'
 alias pgls='pnpm list --global'
 alias pgrm='pnpm remove --global'
 alias pgu='pnpm update --global'
 
-# scripts
+# Run scripts
 alias prun='pnpm run'
 alias pd='pnpm run dev'
 alias pb='pnpm run build'
-alias ps='pnpm run serve'
+alias psv='pnpm run serve'
 alias pst='pnpm start'
 alias pt='pnpm test'
 alias ptc='pnpm test --coverage'
 alias pln='pnpm run lint'
-alias pdoc='pnpm run doc'
 alias pdocs='pnpm run docs'
+alias pex='pnpm exec'
+alias pdx='pnpm dlx'
 
-# miscs
-alias ph='pnpm help'
+# Misc
 alias pi='pnpm init'
 alias ppub='pnpm publish'
-alias psv='pnpm server'
 alias pc='pnpm create'
-
-# pnpx
-alias px='pnpx'
