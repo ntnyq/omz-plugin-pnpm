@@ -67,7 +67,7 @@ Add `zinit light ntnyq/omz-plugin-pnpm` to`~/.zshrc`
   - `ph` for `pnpm help`.
   - `pout` for `pnpm outdated`.
   - `pau` for `pnpm audit`.
-  - `pwhy` for `'pnpm why`.
+  - `pwhy` for `pnpm why`.
 - Changed aliases
   - `pup` for `pnpm update` has been renamed to `pu`.
   - `ps` for `pnpm run serve` has been renamed to `psv`. See [issue #6](https://github.com/ntnyq/omz-plugin-pnpm/issues/6)
