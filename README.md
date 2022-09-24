@@ -53,8 +53,12 @@ Add `zinit light ntnyq/omz-plugin-pnpm` to`~/.zshrc`
 | puil  | `pnpm update --interactive --latest` | Prompt for which outdated packages to upgrade to the latest available version |
 | pc    | `pnpm create`                        | Create a project from a create-\* start kit                                   |
 | ppub  | `pnpm publish`                       | Publish a package to the registry                                             |
+| pf    | `pnpm -r --filter`                   | Use filter in monorepo root directory                                         |
 
 ## CHANGELOG
+### 2022-09-24
+- New aliases
+  - `pf` for `pnpm -r --filter`  
 
 ### 2022-07-15
 
