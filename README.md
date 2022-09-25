@@ -20,7 +20,15 @@ Aliases for common [pnpm](https://pnpm.io) commands.
 
 ### Zinit
 
-Add `zinit light ntnyq/omz-plugin-pnpm` to`~/.zshrc`
+Add script bellow to your `~/.zshrc`
+ 
+```shell
+zinit light ntnyq/omz-plugin-pnpm
+```
+
+### Other
+
+PRs are welcome!
 
 ## Aliases
 
@@ -56,7 +64,9 @@ Add `zinit light ntnyq/omz-plugin-pnpm` to`~/.zshrc`
 | pf    | `pnpm -r --filter`                   | Use filter in monorepo root directory                                         |
 
 ## CHANGELOG
+
 ### 2022-09-24
+
 - New aliases
   - `pf` for `pnpm -r --filter`  
 
