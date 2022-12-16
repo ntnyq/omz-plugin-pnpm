@@ -19,6 +19,7 @@ alias pgrm='pnpm remove --global'
 alias pgu='pnpm update --global'
 
 # Run scripts
+alias pr='pnpm run'
 alias prun='pnpm run'
 alias pd='pnpm run dev'
 alias pb='pnpm run build'
