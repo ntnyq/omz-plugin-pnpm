@@ -33,6 +33,18 @@ zinit light ntnyq/omz-plugin-pnpm
 
 PRs are always welcome!
 
+## Global scripts directory
+
+> This feature is copied from [omz-plugin-yarn](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/yarn)
+
+Adding pnpm global scripts dir (commonly ~/Library/pnpm) to the `$PATH`. 
+
+To disable this feature, set the following style in your .zshrc:
+
+```
+zstyle ':omz:plugins:pnpm' global-path false
+```
+
 ## Aliases
 
 | Alias | Command                              | Description                                                                   |
@@ -68,6 +80,11 @@ PRs are always welcome!
 | pf    | `pnpm -r --filter`                   | Use filter in monorepo root directory                                         |
 
 ## CHANGELOG
+
+### 2023-03-15
+
+- Features
+  - Add pnpm global scripts dir to `$PATH`
 
 ### 2022-12-16
 
