@@ -37,7 +37,7 @@ PRs are always welcome!
 
 > This feature is copied from [omz-plugin-yarn](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/yarn)
 
-Adding pnpm global scripts dir (commonly ~/Library/pnpm) to the `$PATH`. 
+Adding pnpm global scripts dir (commonly ~/Library/pnpm) to the `$PATH`.
 
 To disable this feature, set the following style in your .zshrc:
 
@@ -68,6 +68,7 @@ zstyle ':omz:plugins:pnpm' global-path false
 | pst   | `pnpm start`                         | Run the start script defined in `package.json`                                |
 | pln   | `pnpm run lint`                      | Run the lint script defined in `package.json`                                 |
 | pdocs | `pnpm run docs`                      | Run the docs script defined in `package.json`                                 |
+| pfmt  | `pnpm run format`                    | Run the format script defined in `package.json`                               |
 | pb    | `pnpm run build`                     | Run the build script defined in `package.json`                                |
 | pd    | `pnpm run dev`                       | Run the dev script defined in `package.json`                                  |
 | psv   | `pnpm run serve`                     | Run the serve script defined in `package.json`                                |
@@ -80,6 +81,11 @@ zstyle ':omz:plugins:pnpm' global-path false
 | pf    | `pnpm -r --filter`                   | Use filter in monorepo root directory                                         |
 
 ## CHANGELOG
+
+### 2023-08-14
+
+- New aliases
+  - `pfmt` for `pnpm run format`
 
 ### 2023-03-15
 
