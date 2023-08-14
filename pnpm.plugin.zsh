@@ -41,6 +41,7 @@ alias pt='pnpm test'
 alias ptc='pnpm test --coverage'
 alias pln='pnpm run lint'
 alias pdocs='pnpm run docs'
+alias pfmt='pnpm run format'
 alias pex='pnpm exec'
 alias pdx='pnpm dlx'
 
