@@ -22,6 +22,7 @@ alias prm='pnpm remove'
 alias pin='pnpm install'
 alias pls='pnpm list'
 alias pu='pnpm update'
+alias pui='pnpm update --interactive'
 alias puil='pnpm update --interactive --latest'
 
 # Global dependencies
