@@ -2,6 +2,7 @@ if zstyle -T ':omz:plugins:pnpm' global-path; then
   # Skip pnpm call if default global bin dir exists
   [[ -d "$HOME/Library/pnpm" ]] && bindir="$HOME/Library/pnpm" || bindir="$(pnpm -g bin 2>/dev/null)"
 
+  export PNPM_HOME="$bindir"
   # Add pnpm bin directory to $PATH if it exists and not already in $PATH
   [[ $? -eq 0 ]] \
     && [[ -d "$bindir" ]] \
