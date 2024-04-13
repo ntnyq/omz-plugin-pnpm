@@ -83,6 +83,11 @@ zstyle ':omz:plugins:pnpm' global-path false
 
 ## CHANGELOG
 
+### 2024-04-13
+
+- Features
+  - Set `PNPM_HOME` environment variable to global bin dir
+
 ### 2024-03-13
 
 - New aliases
