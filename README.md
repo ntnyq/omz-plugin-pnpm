@@ -48,7 +48,7 @@ zstyle ':omz:plugins:pnpm' global-path false
 ## Aliases
 
 | Alias | Command                              | Description                                                                             |
-| ----- | ------------------------------------ | --------------------------------------------------------------------------------------- |
+|-------|--------------------------------------|-----------------------------------------------------------------------------------------|
 | p     | `pnpm`                               | The pnpm command                                                                        |
 | pex   | `pnpm exec`                          | Execute a shell command in scope of a project                                           |
 | pdx   | `pnpm dlx`                           | Fetch a package without installing, hotload and run it's command                        |
@@ -63,6 +63,7 @@ zstyle ':omz:plugins:pnpm' global-path false
 | pgu   | `pnpm update --global`               | Upgrade packages installed globally to their latest version                             |
 | pi    | `pnpm init`                          | Interactively creates or updates a package.json file                                    |
 | pin   | `pnpm install`                       | Install dependencies defined in `package.json`                                          |
+| pinf  | `pnpm install --frozen-lockfile`     | Install dependencies defined in `package.json` without touching lockfile                |
 | pr    | `pnpm run`                           | Run a defined package script                                                            |
 | prun  | `pnpm run`                           | Run a defined package script                                                            |
 | pst   | `pnpm start`                         | Run the start script defined in `package.json`                                          |
@@ -82,6 +83,11 @@ zstyle ':omz:plugins:pnpm' global-path false
 | pf    | `pnpm -r --filter`                   | Use filter in monorepo root directory                                                   |
 
 ## CHANGELOG
+
+### 2024-05-23
+
+- New aliases
+  - `pinf` for `pnpm install --frozen-lockfile`
 
 ### 2024-04-13
 
