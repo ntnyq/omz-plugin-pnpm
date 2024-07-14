@@ -42,13 +42,13 @@ Adding pnpm global scripts dir (commonly ~/Library/pnpm) to the `$PATH`.
 To disable this feature, set the following style in your .zshrc:
 
 ```
-zstyle ':omz:plugins:pnpm' global-path false
+zstyle ':omz:plugins:pnpm' global-path no
 ```
 
 ## Aliases
 
 | Alias | Command                              | Description                                                                             |
-|-------|--------------------------------------|-----------------------------------------------------------------------------------------|
+| ----- | ------------------------------------ | --------------------------------------------------------------------------------------- |
 | p     | `pnpm`                               | The pnpm command                                                                        |
 | pex   | `pnpm exec`                          | Execute a shell command in scope of a project                                           |
 | pdx   | `pnpm dlx`                           | Fetch a package without installing, hotload and run it's command                        |
