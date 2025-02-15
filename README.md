@@ -80,9 +80,15 @@ zstyle ':omz:plugins:pnpm' global-path no
 | puil  | `pnpm update --interactive --latest` | Prompt for which outdated packages to upgrade to the latest available version           |
 | pc    | `pnpm create`                        | Create a project from a create-\* start kit                                             |
 | ppub  | `pnpm publish`                       | Publish a package to the registry                                                       |
+| pab   | `pnpm approve-builds`                | Approve dependencies for running scripts during installation                            |
 | pf    | `pnpm -r --filter`                   | Use filter in monorepo root directory                                                   |
 
 ## CHANGELOG
+
+### 2025-02-15
+
+- New aliases
+  - `pab` for `pnpm approve-builds`
 
 ### 2024-05-23
 

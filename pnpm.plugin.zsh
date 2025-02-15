@@ -54,6 +54,7 @@ alias pdx='pnpm dlx'
 alias pi='pnpm init'
 alias ppub='pnpm publish'
 alias pc='pnpm create'
+alias pab='pnpm approve-builds'
 
 # Monorepo
 alias pf='pnpm -r --filter'
