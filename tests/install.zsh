@@ -9,7 +9,11 @@ if [[ "${1-}" != --case ]]; then
   run_cases "$test_script" "${test_script:h:h}/install.sh" \
     default custom-root custom-directory relative-directory update \
     failed-download empty-download invalid-download timed-out-download \
-    interrupted-download git-install symlink help
+    interrupted-download git-install symlink help \
+    readme-sh-default readme-sh-custom readme-sh-failed-download \
+    readme-sh-partial-download readme-sh-installer-failure \
+    readme-zsh-default readme-zsh-custom readme-zsh-failed-download \
+    readme-zsh-partial-download readme-zsh-installer-failure
   exit $?
 fi
 
@@ -18,10 +22,12 @@ installer="$3"
 cd "$TEST_ROOT/project"
 mkdir "$TEST_ROOT/tools"
 cp "${test_script:h:h}/pnpm.plugin.zsh" "$TEST_ROOT/payload"
+export INSTALL_TEST_INSTALLER="$installer"
 cat > "$TEST_ROOT/tools/curl" <<'SH'
 #!/bin/sh
 set -eu
 printf '%s\n' "$@" > "$TEST_ROOT/curl-args"
+output=/dev/stdout
 connect_timeout=
 max_time=
 while [ "$#" -gt 0 ]; do
@@ -29,6 +35,7 @@ while [ "$#" -gt 0 ]; do
     --output) output=$2; shift ;;
     --connect-timeout) connect_timeout=$2; shift ;;
     --max-time) max_time=$2; shift ;;
+    https://*) url=$1 ;;
   esac
   shift
 done
@@ -36,6 +43,19 @@ done
 if [ "$connect_timeout" != 10 ] || [ "$max_time" != 60 ]; then
   : > "$TEST_ROOT/missing-timeout"
 fi
+case "$url" in
+  */install.sh)
+    case "${INSTALL_TEST_BOOTSTRAP-}" in
+      failed) exit 22 ;;
+      partial)
+        printf 'touch "$TEST_ROOT/executed-partial-installer"\n' > "$output"
+        exit 22
+        ;;
+      *) cp "$INSTALL_TEST_INSTALLER" "$output" ;;
+    esac
+    exit 0
+    ;;
+esac
 case "${INSTALL_TEST_DOWNLOAD-}" in
   failed) printf 'partial download\n' > "$output"; exit 22 ;;
   timed-out) printf 'partial download\n' > "$output"; exit 28 ;;
@@ -72,6 +92,17 @@ case "$test_case" in
     export INSTALL_TEST_DOWNLOAD="${test_case%-download}"
     expect_failure=1
     ;;
+  readme-*-custom)
+    destination="$HOME/.local/share/zsh/plugins/pnpm"
+    ;;
+  readme-*-failed-download|readme-*-partial-download)
+    export INSTALL_TEST_BOOTSTRAP="${${test_case#readme-*-}%-download}"
+    expect_failure=1
+    ;;
+  readme-*-installer-failure)
+    export INSTALL_TEST_DOWNLOAD=invalid
+    expect_failure=1
+    ;;
   git-install|symlink) expect_failure=1 ;;
   help) installer_args=(--help) ;;
 esac
@@ -88,8 +119,26 @@ elif [[ "$test_case" == symlink ]]; then
   ln -s "$TEST_ROOT/linked-plugin" "$destination/pnpm.plugin.zsh"
 fi
 
+installer_command=(/bin/sh "$installer" "${installer_args[@]}")
+if [[ "$test_case" == readme-* ]]; then
+  # Execute the documented commands themselves, without inherited errexit/pipefail.
+  example_number=1
+  [[ "$test_case" != readme-*-custom ]] || example_number=2
+  awk -v target="$example_number" '
+    /^### Lightweight installation$/ { in_section = 1; next }
+    in_section && /^### / { exit }
+    in_section && /^```sh$/ { block++; in_code = 1; next }
+    in_code && /^```$/ { in_code = 0 }
+    in_code && block == target { print }
+  ' "${installer:h}/README.md" > "$TEST_ROOT/readme-example"
+  [[ -s "$TEST_ROOT/readme-example" ]] || fail 'Missing README installation example'
+  example_shell=sh
+  [[ "$test_case" != readme-zsh-* ]] || example_shell=zsh
+  installer_command=("${commands[$example_shell]}" "$TEST_ROOT/readme-example")
+fi
+
 result=0
-/bin/sh "$installer" "${installer_args[@]}" > "$TEST_ROOT/install.log" 2>&1 || result=$?
+"${installer_command[@]}" > "$TEST_ROOT/install.log" 2>&1 || result=$?
 if (( expect_failure )); then
   (( result != 0 )) || fail 'Installation must fail'
   assert_equal '# previous plugin' "$(<"$destination/pnpm.plugin.zsh")" 'Preserve old plugin'
@@ -117,5 +166,8 @@ case "$test_case" in
   git-install|symlink|help) assert_absent "$TEST_ROOT/curl-args" ;;
 esac
 assert_absent "$TEST_ROOT/missing-timeout"
+assert_absent "$TEST_ROOT/executed-partial-installer"
 temporary_files=("$destination"/.pnpm.plugin.zsh.*(N))
 assert_equal 0 "${#temporary_files}" 'Remove temporary downloads'
+temporary_installers=("$TMPDIR"/omz-plugin-pnpm.*(N))
+assert_equal 0 "${#temporary_installers}" 'Remove temporary installers'
