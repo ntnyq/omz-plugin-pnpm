@@ -1,31 +1,61 @@
 if zstyle -T ':omz:plugins:pnpm' global-path; then
-  if [[ -n "$PNPM_HOME" ]]; then
-    # `PNPM_HOME` is already configured (e.g. by `pnpm setup`, a container image
-    # or a devcontainer feature). Trust it and skip the pnpm call, see #14.
-    # Whoever set `PNPM_HOME` is responsible for putting the bin dir on $PATH.
-    :
-  else
-    # Skip pnpm call if default global bin dir exists
-    [[ -d "$HOME/Library/pnpm" ]] && bindir="$HOME/Library/pnpm" || bindir="$(pnpm -g bin 2>/dev/null)"
+  () {
+    emulate -L zsh
 
-    # Only touch the environment when pnpm returned an existing directory.
-    # Never export an empty `PNPM_HOME`: pnpm then treats the current working
-    # directory as its home and litters `global/` and `package-manager-store/`
-    # into whatever project you run it from.
-    if [[ -n "$bindir" && -d "$bindir" ]]; then
-      # pnpm >= 11 links global binaries into "$PNPM_HOME/bin", older versions
-      # into "$PNPM_HOME" itself. Derive the home dir accordingly, see #14.
-      if [[ "${bindir:t}" == "bin" ]]; then
-        export PNPM_HOME="${bindir:h}"
+    local pnpm_home="${PNPM_HOME-}"
+    local pnpm_path_home pnpm_bin
+    local -a pnpm_bin_dirs
+
+    if [[ -z "$pnpm_home" ]]; then
+      # An empty readonly value cannot be repaired; still load the aliases.
+      [[ "${(t)PNPM_HOME}" != *readonly* ]] || return 0
+
+      # An inherited empty value is not a valid pnpm home either.
+      unset PNPM_HOME
+
+      # Match pnpm's data-directory defaults on macOS and other Unix systems.
+      if [[ -n "${XDG_DATA_HOME-}" ]]; then
+        pnpm_home="${XDG_DATA_HOME%/}/pnpm"
+      elif [[ -n "${HOME-}" ]]; then
+        case "$OSTYPE" in
+          darwin*) pnpm_home="$HOME/Library/pnpm" ;;
+          *) pnpm_home="$HOME/.local/share/pnpm" ;;
+        esac
       else
-        export PNPM_HOME="$bindir"
+        return 0
       fi
-
-      # Add pnpm bin directory to $PATH if not already in $PATH
-      (( ! ${path[(Ie)$bindir]} )) && path+=("$bindir")
     fi
-    unset bindir
-  fi
+
+    # Never add a relative path or a PATH separator to the command search path.
+    [[ "$pnpm_home" == /* && "$pnpm_home" != *:* ]] || return 0
+
+    # Keep an existing nonempty value, including a home whose name is "bin".
+    [[ -n "${PNPM_HOME-}" ]] || PNPM_HOME="$pnpm_home"
+    export PNPM_HOME
+    pnpm_path_home="${pnpm_home%/}"
+    pnpm_path_home="${pnpm_path_home:-/}"
+
+    # pnpm 11/12 use the bin subdirectory; pnpm 10 uses the home itself.
+    # Include both even before they exist, so later installs/upgrades work.
+    pnpm_bin_dirs=("${pnpm_path_home%/}/bin" "$pnpm_path_home")
+
+    # Keep symlink/.. paths intact for pnpm 10/12 and changing symlink targets.
+    # pnpm 10/11 also normalize paths when installing global packages.
+    pnpm_path_home="${pnpm_home:a}"
+    pnpm_bin_dirs+=("${pnpm_path_home%/}/bin" "$pnpm_path_home")
+
+    # An independently configured globalBinDir is a bin directory, not a home.
+    if zstyle -s ':omz:plugins:pnpm' global-bin-dir pnpm_bin \
+      && [[ "$pnpm_bin" == /* && "$pnpm_bin" != *:* ]]; then
+      pnpm_bin="${pnpm_bin%/}"
+      pnpm_bin="${pnpm_bin:-/}"
+      pnpm_bin_dirs=("$pnpm_bin" "${pnpm_bin:a}" "${pnpm_bin_dirs[@]}")
+    fi
+
+    for pnpm_bin in "${pnpm_bin_dirs[@]}"; do
+      (( ${path[(Ie)$pnpm_bin]} )) || path+=("$pnpm_bin")
+    done
+  }
 fi
 
 # Aliases
