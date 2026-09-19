@@ -29,11 +29,14 @@ jobs:
         run: sudo apt-get update && sudo apt-get install --yes zsh
       - name: Check syntax
         run: |
+          sh -n install.sh
           for script in pnpm.plugin.zsh tests/*.zsh; do
             zsh -n "$script"
           done
       - name: Test shell behavior
         run: zsh -f tests/global-path.zsh
+      - name: Test lightweight installation
+        run: zsh -f tests/install.zsh
 
   integration:
     name: pnpm ${{ matrix.pnpm }} / ${{ matrix.os }}
