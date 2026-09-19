@@ -1,0 +1,61 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: test-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  shell:
+    name: Zsh / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install Zsh
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install --yes zsh
+      - name: Check syntax
+        run: |
+          for script in pnpm.plugin.zsh tests/*.zsh; do
+            zsh -n "$script"
+          done
+      - name: Test shell behavior
+        run: zsh -f tests/global-path.zsh
+
+  integration:
+    name: pnpm ${{ matrix.pnpm }} / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        pnpm: [10.0.0, 11.0.0, 11.26.0, 12.0.0, 12.4.2]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Install Zsh
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install --yes zsh
+      - name: Install the pinned pnpm CLI without configuring PNPM_HOME
+        env:
+          PNPM_VERSION: ${{ matrix.pnpm }}
+        run: npm install --prefix "$RUNNER_TEMP/pnpm-cli" --no-package-lock --no-audit --no-fund "pnpm@$PNPM_VERSION"
+      - name: Test global paths and commands
+        run: zsh -f tests/integration.zsh "$RUNNER_TEMP/pnpm-cli/node_modules/.bin/pnpm"
