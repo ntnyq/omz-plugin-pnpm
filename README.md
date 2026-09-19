@@ -47,6 +47,12 @@ zstyle ':omz:plugins:pnpm' global-path no
 
 ## Aliases
 
+By default, this plugin loads a wide range of aliases. If you prefer to disable them, add the following line to your `.zshrc`:
+
+```zsh
+zstyle ':omz:plugins:pnpm' aliases no
+```
+
 | Alias | Command                              | Description                                                                             |
 | ----- | ------------------------------------ | --------------------------------------------------------------------------------------- |
 | p     | `pnpm`                               | The pnpm command                                                                        |
@@ -82,6 +88,16 @@ zstyle ':omz:plugins:pnpm' global-path no
 | ppub  | `pnpm publish`                       | Publish a package to the registry                                                       |
 | pab   | `pnpm approve-builds`                | Approve dependencies for running scripts during installation                            |
 | pf    | `pnpm -r --filter`                   | Use filter in monorepo root directory                                                   |
+
+## Completion
+
+This plugin automatically initializes and sources native `pnpm` shell completions for Zsh. 
+
+To disable this feature and handle completions manually, add the following line to your `.zshrc`:
+
+```zsh
+zstyle ':omz:plugins:pnpm' completion no
+```
 
 ## CHANGELOG
 

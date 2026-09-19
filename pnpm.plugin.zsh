@@ -28,48 +28,53 @@ if zstyle -T ':omz:plugins:pnpm' global-path; then
   fi
 fi
 
-# Aliases
+if zstyle -T ':omz:plugins:pnpm' aliases; then
+  # Aliases
+  alias p='pnpm'
 
-alias p='pnpm'
+  # Dependencies
+  alias pa='pnpm add'
+  alias pad='pnpm add --save-dev'
+  alias pap='pnpm add --save-peer'
+  alias prm='pnpm remove'
+  alias pin='pnpm install'
+  alias pinf='pnpm install --frozen-lockfile'
+  alias pls='pnpm list'
+  alias pu='pnpm update'
+  alias pui='pnpm update --interactive'
+  alias puil='pnpm update --interactive --latest'
 
-# Dependencies
-alias pa='pnpm add'
-alias pad='pnpm add --save-dev'
-alias pap='pnpm add --save-peer'
-alias prm='pnpm remove'
-alias pin='pnpm install'
-alias pinf='pnpm install --frozen-lockfile'
-alias pls='pnpm list'
-alias pu='pnpm update'
-alias pui='pnpm update --interactive'
-alias puil='pnpm update --interactive --latest'
+  # Global dependencies
+  alias pga='pnpm add --global'
+  alias pgls='pnpm list --global'
+  alias pgrm='pnpm remove --global'
+  alias pgu='pnpm update --global'
 
-# Global dependencies
-alias pga='pnpm add --global'
-alias pgls='pnpm list --global'
-alias pgrm='pnpm remove --global'
-alias pgu='pnpm update --global'
+  # Run scripts
+  alias pr='pnpm run'
+  alias prun='pnpm run'
+  alias pd='pnpm run dev'
+  alias pb='pnpm run build'
+  alias psv='pnpm run serve'
+  alias pst='pnpm start'
+  alias pt='pnpm test'
+  alias ptc='pnpm test --coverage'
+  alias pln='pnpm run lint'
+  alias pdocs='pnpm run docs'
+  alias pfmt='pnpm run format'
+  alias pex='pnpm exec'
+  alias pdx='pnpm dlx'
 
-# Run scripts
-alias pr='pnpm run'
-alias prun='pnpm run'
-alias pd='pnpm run dev'
-alias pb='pnpm run build'
-alias psv='pnpm run serve'
-alias pst='pnpm start'
-alias pt='pnpm test'
-alias ptc='pnpm test --coverage'
-alias pln='pnpm run lint'
-alias pdocs='pnpm run docs'
-alias pfmt='pnpm run format'
-alias pex='pnpm exec'
-alias pdx='pnpm dlx'
+  # Misc
+  alias pi='pnpm init'
+  alias ppub='pnpm publish'
+  alias pc='pnpm create'
+  alias pab='pnpm approve-builds'
 
-# Misc
-alias pi='pnpm init'
-alias ppub='pnpm publish'
-alias pc='pnpm create'
-alias pab='pnpm approve-builds'
+  # Monorepo
+  alias pf='pnpm -r --filter'
+fi
 
-# Monorepo
-alias pf='pnpm -r --filter'
+if zstyle -T ':omz:plugins:pnpm' completion; then
+  source <(pnpm completion zsh)
+fi
